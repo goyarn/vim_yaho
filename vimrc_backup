@@ -1,0 +1,3 @@
+for include_file in uniq(sort(globpath(&rtp, 'vim_yaho/*.vim', 0, 1)))
+    execute "source " . include_file
+endfor

@@ -1,0 +1,202 @@
+snippet fori
+for(int ${1:variable} = ${2:begin}; $1 < ${3:end}; ++$1){
+	${0:your code!}
+}
+endsnippet
+
+snippet forr
+for(int ${1:variable} = ${2:end} - 1; $1 >= ${3:start}; --$1){
+	${0:your code!}
+}
+endsnippet
+
+# hello
+snippet minimum_priority_queue
+priority_queue<${1:type}, vector<$1>, greater<$1>> ${0:name}
+endsnippet
+
+
+
+#################################### for Competitive Programming!
+
+snippet bipartite_match
+#define MAX_N 101
+
+vector<int> edge[MAX_N]; // adjacent vector
+bool check[MAX_N];
+int connected[MAX_N];
+int n, m, s;
+
+bool bm_dfs(int x){
+	for (auto& t : edge[x]){
+		if (check[t]) continue;
+		check[t] = true;
+		if (connected[t] || bm_dfs(connected[t])){
+			connected[t] = x;
+			return true;
+		}
+	}
+	return false;
+}
+
+int bipartiteMatch(void){
+	// 전처리는 알아서 하셈
+	int ret = 0;
+	for(int i = 0; i < n; ++i){
+		fill(check, check + MAX_N, false);
+		if (bm_dfs(i)) ret += 1;
+	}
+	return ret;
+}
+endsnippet
+
+snippet matrix_integer
+//code for matrix multiplication & fast power of matrix.
+struct Matrix
+{
+	int row, col;
+	std::vector<std::vector<int>> elem;
+	Matrix(int _r, int _c):row(_r), col(_c)
+	{
+		elem = std::vector<std::vector<int>>(row, std::vector<int>(col, 0));
+	}
+
+	Matrix operator*(const Matrix& rhs) const{
+		if (col != rhs.row){
+			// ERROR!
+			return Matrix(1, 1);
+		}
+		Matrix result(row, rhs.col);
+		for(int i=0;i<row;++i){
+			for(int j=0;j<rhs.col;++j){
+				for(int k=0;k<col;++k){
+					result.elem[i][j] += elem[i][k] * rhs.elem[k][j];
+				}
+			}
+		}
+		return result;
+	}
+
+	Matrix fast_pow(int x) const{
+		Matrix result = fast_pow(x / 2);
+		result = result * result;
+		if (x % 2)
+			result = result * (*this);
+		return result;
+	}
+};
+endsnippet
+
+snippet kmp
+vector<int> getPartialMatch(const string &N)
+{
+	int m = N.size();
+	vector<int> pi(m, 0);
+	int begin = 1, matched = 0;
+	while(begin + matched < m){
+		if (N[begin + matched] == N[matched]){
+			matched += 1;
+			pi[begin + matched - 1] = matched;
+		}
+		else{
+			if (matched == 0)
+				begin += 1;
+			else{
+				begin += matched - pi[matched - 1];
+				matched = pi[matched - 1];
+			}
+		}
+	}
+	return pi;
+}
+
+//주의 : vector<int> 반환 및 vector<int> ret는 검색결과 계산의 한가지 방법일 뿐입니다.
+vector<int> kmp_search(const string &H, const string &N)
+{
+	// H : haystack, N : needle
+	int n = H.size(), m = N.size();
+	vector<int> ret;
+	// pi[i] = N[...i]의 접미사도 되고 접두사도 되는 문자열의 최대 길이
+	vector<int> pi = getPartialMatch(N);
+	int begin = 0, matched = 0;
+	while (begin <= n - m)
+	{
+		if (matched < m && H[begin + matched] == N[matched])
+		{
+			matched += 1;
+			if (matched == m)
+				ret.push_back(begin);
+		}
+		else
+		{
+			if (matched == 0)
+				++begin;
+			else
+			{
+				begin += matched - pi[matched - 1];
+				matched = pi[matched - 1];
+			}
+		}
+	}
+	return ret;
+}
+endsnippet
+
+snippet boj
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <set>
+#include <algorithm>
+#include <utility>
+#include <tuple>
+#include <queue>
+#include <deque>
+#include <list>
+#include <cstring>
+#include <cmath>
+
+using namespace std;
+
+int main(void){
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	return 0;
+}
+endsnippet
+
+snippet vector_2
+const double PI = 2.0 * acos(0.0);
+
+template <typename T>
+struct vector2
+{
+	T x, y;
+	explicit vector2(T x_ = 0, T y_ = 0) : x(x_), y(y_) {}
+
+	//compare
+	bool operator == (const vector2& rhs) const{
+		return (x == rhs.x && y == rhs.y);
+	}
+	bool operator < (const vector2& rhs) const{
+		return x != rhs.x ? x < rhs.x : y < rhs.y;
+	}
+	// + - *
+	vector2 operator+ (const vector2& rhs) const{
+		return vector2(x + rhs.x, y + rhs.y);
+	}
+	vector2 operator- (const vector2& rhs) const{
+		return vector2(x - rhs.x, y - rhs.y);
+	}
+	vector2 operator* (T rhs) const{
+		return vector2(x * rhs, y * rhs);
+	}
+	// length
+	T norm() const {return hypot(x, y);}
+	// return unit vector
+	vector2 normalize() const {
+		return vector2(x / norm(), y / norm());
+	}
+};
+endsnippet
