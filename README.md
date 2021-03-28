@@ -5,7 +5,7 @@
 
 # 설명
 `.vimrc` 에는 `~/.vim/vim_yaho` 내부 파일들을 실행하는 소스만 있게 했습니다.
-그것이 `vimrc_backup` 이고, 나머지 다른 모든 부분들을 (autoload, plugged 제외)
+그것이 `vimrc_backup` 이고, 나머지 다른 모든 부분들을 (autoload, plugged 제외) 폴더에 넣어 정리되도록 만들었습니다.
 
 ## Plug-in manager
 vim-plug 이므로 처음 이용시 vim-plug 설치 후 설정파일을 불러와 :PlugInstall 해야 함
