@@ -1,3 +1,9 @@
+snippet forn
+for(int ${1:variable} = 0; $1 < ${2:n}; ++$1){
+	${0:your code}
+}
+endsnippet
+
 snippet fori
 for(int ${1:variable} = ${2:begin}; $1 < ${3:end}; ++$1){
 	${0:your code!}
@@ -15,7 +21,36 @@ snippet minimum_priority_queue
 priority_queue<${1:type}, vector<$1>, greater<$1>> ${0:name}
 endsnippet
 
+snippet gcd
+long long gcd(long long a, long long b){
+	if (b == 0)
+		return a;
+	return gcd(b, a % b);
+}
+endsnippet
 
+snippet factor_integer
+vector<int> factor(int x){
+	vector<int> ret;
+	if (x <= 1) return ret;
+	while (x % 2 == 0){
+		ret.push_back(2);
+		x /= 2;
+	}
+	while (x % 3 == 0){
+		ret.push_back(3);
+		x /= 3;
+	}
+	for(int i = 5; i <= sqrt(x); i += 2){
+		while (x % i == 0){
+			ret.push_back(i);
+			x /= i;
+		}
+	}
+	if (x > 1) ret.push_back(x);
+	return ret;
+}
+endsnippet
 
 #################################### for Competitive Programming!
 
