@@ -55,33 +55,33 @@ endsnippet
 #################################### for Competitive Programming!
 
 snippet bipartite_match
-#define MAX_N 101
+// n + m <= MAXV
+// edge is n -> m directed.
+constexpr int MAXV = 2080;
+vector<int> edge[MAXV];
+vector<int> parent(MAXV, -1);
+bool check[MAXV];
 
-vector<int> edge[MAX_N]; // adjacent vector
-bool check[MAX_N];
-int connected[MAX_N];
-int n, m, s;
-
-bool bm_dfs(int x){
-	for (auto& t : edge[x]){
-		if (check[t]) continue;
-		check[t] = true;
-		if (connected[t] || bm_dfs(connected[t])){
-			connected[t] = x;
+bool match(int v){
+	for(auto i : edge[v]){
+		if(check[i]) continue;
+		check[i] = true;
+		if(parent[i] == -1 || match(parent[i])){
+			parent[i] = v;
 			return true;
 		}
 	}
 	return false;
 }
 
-int bipartiteMatch(void){
-	// 전처리는 알아서 하셈
-	int ret = 0;
+int bipartite_match(int n){
+	int ans = 0;
 	for(int i = 0; i < n; ++i){
-		fill(check, check + MAX_N, false);
-		if (bm_dfs(i)) ret += 1;
+		fill(check, check + MAXV, false);
+		if (match(i))
+			ans += 1;
 	}
-	return ret;
+	return ans;
 }
 endsnippet
 
