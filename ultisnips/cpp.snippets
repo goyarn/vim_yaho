@@ -16,7 +16,32 @@ for(int ${1:variable} = ${2:end} - 1; $1 >= ${3:start}; --$1){
 }
 endsnippet
 
-# hello
+snippet union_find
+// Union-find, path compressed.
+constexpr int MAXV = 5000;
+int _parent[MAXV];
+int _rank[MAXV];
+void init(int n){
+	for(int i = 0; i < n; ++i){
+		_parent[i] = i;
+		_rank[i] = 1;//rank optimization
+	}
+}
+int find(int v){
+	if (v == _parent[v]) return v;
+	return _parent[v] = find(_parent[v]); // path compression
+}
+bool merge(int u, int v){
+	u = find(u);
+	v = find(v);
+	if (u == v) return true;
+	if (_rank[u] > _rank[v]) swap(u, v); // rank optimization
+	_parent[u] = v;
+	if (_rank[u] == _rank[v]) _rank[v] += 1; // rank optimization
+	return true;
+}
+endsnippet
+
 snippet minimum_priority_queue
 priority_queue<${1:type}, vector<$1>, greater<$1>> ${0:name}
 endsnippet
