@@ -29,6 +29,55 @@ long long gcd(long long a, long long b){
 }
 endsnippet
 
+snippet least_common_ancestor
+// LCA code with DP
+constexpr int MAX_V = 100010;
+constexpr int MAX_POW = 30; // 트리 깊이가 2^30 이 되긴 어렵겠죠
+vector<int> children[MAX_V];
+int depth[MAX_V];
+int parent[MAX_V][MAX_POW];
+int visit[MAX_V];
+
+void lca_dfs(int cur, int d){
+	visit[cur] = 1;
+	depth[cur] = d;
+	for(const auto& child : children[cur]){
+		if (!visit[child]){
+			parent[child][0] = cur; // child's (2^0)-th (=first) parent.
+			lca_dfs(child, d + 1);
+		}
+	}
+}
+void parent_dp(int n){
+	for(int j = 1; j < MAX_POW; ++j){
+		for(int i = 0; i < n; ++i){
+			parent[i][j] = parent[parent[i][j - 1]][j - 1]; // 2^j = 2^(j - 1) + 2^(j - 1)
+		}
+	}
+}
+void init_lca(int n, int root){
+	lca_dfs(root, 0);
+	parent_dp(n);
+}
+
+int lca(int u, int v){
+	if (depth[u] < depth[v]) swap(u, v);
+	int diff = depth[u] - depth[v];
+	for(int i = 0; i < diff; ++i){
+		if (diff & 1) u = parent[u][i];
+		diff >>= 1;
+	}
+	if (u == v) return u;
+	for(int i = MAX_POW - 1; i >= 0; --i){
+		if (parent[u][i] != parent[v][i]){
+			u = parent[u][i];
+			v = parent[v][i];
+		}
+	}
+	return parent[u][0];
+}
+endsnippet
+
 snippet factor_integer
 vector<int> factor(int x){
 	vector<int> ret;
