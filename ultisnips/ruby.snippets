@@ -1,0 +1,20 @@
+snippet controller_test_setting
+include Devise::Test::IntegrationHelpers
+
+private
+
+def login(someone)
+  @user = users(someone)
+  sing_in @user
+end
+
+def result
+  @result = JSON.parse @response.body
+end
+endsnippet
+
+snippet new_test
+test "${1:test_name}" do
+  ${0:test content}
+end
+endsnippet

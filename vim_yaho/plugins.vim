@@ -11,6 +11,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'alvan/vim-closetag'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'Sirver/ultisnips'
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 for include_file in uniq(sort(globpath(&rtp, 'vim_yaho/plugins/*.vim', 0, 1)))

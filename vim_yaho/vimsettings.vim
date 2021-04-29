@@ -37,6 +37,7 @@ autocmd FileType html setlocal ts=2 sts=2 sw=2
 autocmd FileType xhtml setlocal ts=2 sts=2 sw=2
 autocmd FileType css setlocal ts=2 sts=2 sw=2
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2
+autocmd BufRead,BufNewFile *.jbuilder setlocal filetype=ruby
 " history
 set viminfo='50,<1000,s1000,h
 
